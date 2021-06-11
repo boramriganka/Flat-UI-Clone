@@ -7,6 +7,8 @@ import PaletteList from "./PaletteList";
 import SingleColorPalette from "./SingleColorPalette";
 import NewPaletteForm from './NewPaletteForm'
 
+// We have defined our routes in the App  compoenent
+
 class App extends Component {
   findPalette(id){
     return seedColors.find(function(palette){
