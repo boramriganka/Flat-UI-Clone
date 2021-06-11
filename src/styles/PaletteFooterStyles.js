@@ -1,4 +1,4 @@
-export default {
+export default { 
     PaletteFooter: {
       backgroundColor: "white",
       height: "5vh",

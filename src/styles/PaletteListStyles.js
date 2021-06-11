@@ -1,4 +1,4 @@
-export default {
+export default { 
     root: {
       backgroundColor: "blue",
       height: "120vh",

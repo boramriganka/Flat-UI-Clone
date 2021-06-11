@@ -4,7 +4,7 @@ export default {
       alignItems: "center",
       justifyContent: "flex-start",
       height: "6vh"
-    },
+    },  
     logo: {
       marginRight: "15px",
       padding: "0 13px",
