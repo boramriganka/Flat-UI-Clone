@@ -11,20 +11,28 @@ export default {
       cursor: "pointer",
       marginBottom: "-3.5px",
       fontSize: "20px",
+      transition: "transform 0.2s ease-in-out",
+      "&:hover": {
+        transform: "scale(1.05)",
+        zIndex: "5",
+      },
       "&:hover button":{
         opacity: 1,
+        transform: "scale(1)",
       }
     },
     copyText : {
-     color: props => chroma(props.background).luminance() >= 0.7 ?"black":"white",
+     color: props => chroma(props.background).luminance() >= 0.7 ? "rgba(0,0,0,0.7)" : "white",
+     fontWeight: "500",
     }, 
       
     colorName: {
-      color : props => chroma(props.background).luminance() <= 0.08 ?"black":"white",
+      color : props => chroma(props.background).luminance() <= 0.08 ? "rgba(255,255,255,0.8)" : "rgba(0,0,0,0.7)",
+      fontWeight: "500",
     },
   
     seeMore :{
-      color : props => chroma(props.background).luminance() >= 0.7 ?"rgba(0,0,0,0.6)":"white",
+      color : props => chroma(props.background).luminance() >= 0.7 ? "rgba(0,0,0,0.7)" : "white",
       background:"rgba(255,255,255,0.3)",
       position:"absolute",
       border :"none",
@@ -35,26 +43,38 @@ export default {
       textAlign:"center",
       lineHeight:"30px",
       textTransform:"uppercase",
+      borderTopLeftRadius: "5px",
+      transition: "all 0.3s ease",
+      "&:hover": {
+        background: "rgba(255,255,255,0.5)",
+      }
     },
     copyButton:{
       position:" absolute",
       top:" 50%",
       left:" 50%",
       width:" 100px",
-      height:" 30px",
+      height:" 36px",
       display:" inline-block",
       marginLeft:" -50px",
-      marginTop:" -15px",
+      marginTop:" -18px",
       textAlign:" center",
       outline:" none",
       background:" rgba(255,255,255,0.3)",
       fontSize:" 1rem",
-      lineHeight:" 30px",
-      color:"white",
+      lineHeight:" 36px",
+      color: props => chroma(props.background).luminance() >= 0.7 ? "rgba(0,0,0,0.7)" : "white",
       textTransform:" uppercase",
       border:"none",
+      borderRadius: "4px",
       textDecoration:" none",
       opacity: 0,
+      transform: "scale(0.95)",
+      transition: "all 0.2s ease-in-out",
+      boxShadow: "0 2px 10px rgba(0,0,0,0.2)",
+      "&:hover": {
+        background: "rgba(255,255,255,0.4)",
+      }
     },
     boxContent:{
       position: "absolute",
@@ -62,10 +82,11 @@ export default {
       left: "0px",
       bottom: "0px",
       padding: "10px",
-      color:"black",
+      color: props => chroma(props.background).luminance() <= 0.08 ? "rgba(255,255,255,0.8)" : "rgba(0,0,0,0.7)",
       letterSpacing: "1px",
       textTransform: "uppercase",
       fontSize: "12px",
+      fontWeight: "500",
     },
     copyOverlay:{
       opacity: "0",
@@ -96,9 +117,9 @@ export default {
       opacity: "0",
       textTransform: "capitalize",
       "& h1":{
-        fontWeight: "400",
-        textShadow: "1px 2px black",
-        background: "rgba(255,255,255,0.2)",
+        fontWeight: "500",
+        textShadow: "1px 2px rgba(0,0,0,0.5)",
+        background: "rgba(255,255,255,0.3)",
         width: "100%",
         textAlign: "center",
         marginBottom: "0",
@@ -106,7 +127,8 @@ export default {
       },
       "& p":{
         fontSize: "2rem",
-        fontWeight: "100",
+        fontWeight: "300",
+        marginTop: "1rem",
       }
     },
     showMessage:{
