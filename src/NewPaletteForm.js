@@ -5,12 +5,15 @@ import Drawer from '@material-ui/core/Drawer';
 import Typography from '@material-ui/core/Typography';
 import Divider from '@material-ui/core/Divider';
 import IconButton from '@material-ui/core/IconButton';
+import Tooltip from '@material-ui/core/Tooltip';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import Button from '@material-ui/core/Button';
+import GetAppIcon from '@material-ui/icons/GetApp';
 import DraggableColorBox from './DraggableColorBox';
 import { arrayMove } from 'react-sortable-hoc';
 import PaletteFormNav from './PaletteFormNav';
 import ColorPickerForm from './ColorPickerForm';
+import ExportDialog from './ExportDialog';
 import styles from './styles/NewPaletteFormStyles';
 import { SortableContainer, SortableElement } from 'react-sortable-hoc';
 
@@ -50,7 +53,9 @@ class NewPaletteForm extends Component {
     this.state = {
       open: true,
       colors: this.props.palettes[0].colors,
+      exportDialogOpen: false,
     };
+    this.paletteRef = React.createRef();
     this.addNewColor = this.addNewColor.bind(this);
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
@@ -60,6 +65,8 @@ class NewPaletteForm extends Component {
     this.handleDrawerOpen = this.handleDrawerOpen.bind(this);
     this.handleDrawerClose = this.handleDrawerClose.bind(this);
     this.onSortEnd = this.onSortEnd.bind(this);
+    this.openExportDialog = this.openExportDialog.bind(this);
+    this.closeExportDialog = this.closeExportDialog.bind(this);
   }
 
   handleDrawerOpen() {
@@ -131,13 +138,28 @@ class NewPaletteForm extends Component {
     });
   }
 
+  openExportDialog() {
+    this.setState({ exportDialogOpen: true });
+  }
+
+  closeExportDialog() {
+    this.setState({ exportDialogOpen: false });
+  }
+
   render() {
     const { classes, maxColors, palettes } = this.props;
-    const { open, colors } = this.state;
+    const { open, colors, exportDialogOpen } = this.state;
     const paletteIsFull = colors.length >= maxColors;
 
+    // Create a temporary palette object for export
+    const tempPalette = {
+      paletteName: 'My Custom Palette',
+      emoji: '🎨',
+      colors: colors,
+    };
+
     return (
-      <div className={classes.root}>
+      <div className={classes.root} ref={this.paletteRef}>
         <PaletteFormNav
           open={open}
           palettes={palettes}
@@ -161,27 +183,75 @@ class NewPaletteForm extends Component {
           <Divider style={{ backgroundColor: "#555" }} />
           <div className={classes.container}>
             <div className={classes.buttons}>
-              <Button
-                variant="contained"
-                className={classes.button}
-                onClick={this.clearColors}
-                style={{ backgroundColor: "#f44336", color: "white" }}
+              <Tooltip title="Remove all colors from the palette" placement="top" arrow>
+                <Button
+                  variant="contained"
+                  className={classes.button}
+                  onClick={this.clearColors}
+                  style={{ backgroundColor: "#f44336", color: "white" }}
+                >
+                  Clear Palette
+                </Button>
+              </Tooltip>
+              <Tooltip 
+                title={paletteIsFull ? "Palette is full (max 20 colors)" : "Add a random color to your palette"} 
+                placement="top" 
+                arrow
               >
-                Clear Palette
-              </Button>
-              <Button
-                variant="contained"
-                className={classes.button}
-                onClick={this.addRandomColor}
-                disabled={paletteIsFull}
-                style={{ 
-                  backgroundColor: paletteIsFull ? "#888" : "#4caf50",
-                  color: "white" 
-                }}
-              >
-                Random Color
-              </Button>
+                <span>
+                  <Button
+                    variant="contained"
+                    className={classes.button}
+                    onClick={this.addRandomColor}
+                    disabled={paletteIsFull}
+                    style={{ 
+                      backgroundColor: paletteIsFull ? "#888" : "#4caf50",
+                      color: "white" 
+                    }}
+                  >
+                    Random Color
+                  </Button>
+                </span>
+              </Tooltip>
             </div>
+            
+            <Divider style={{ backgroundColor: "#555", margin: "1.5rem 0" }} />
+            
+            <Tooltip 
+              title={colors.length === 0 ? "Add colors to enable export" : "Export palette in CSS, JSON, PNG, and more"} 
+              placement="top" 
+              arrow
+            >
+              <span style={{ display: 'block' }}>
+                <Button
+                  variant="contained"
+                  fullWidth
+                  onClick={this.openExportDialog}
+                  disabled={colors.length === 0}
+                  startIcon={<GetAppIcon />}
+                  style={{
+                    backgroundColor: colors.length === 0 ? "#888" : "#64B5F6",
+                    color: "white",
+                    padding: "0.75rem",
+                    marginBottom: "1rem",
+                  }}
+                >
+                  Export Current Palette
+                </Button>
+              </span>
+            </Tooltip>
+            
+            <Typography 
+              variant="body2" 
+              style={{ 
+                color: "#aaa", 
+                fontSize: "0.85rem",
+                textAlign: "center",
+                marginBottom: "1rem"
+              }}
+            >
+              Export your palette before saving or continue editing
+            </Typography>
             <ColorPickerForm
               paletteIsFull={paletteIsFull}
               addNewColor={this.addNewColor}
@@ -203,6 +273,13 @@ class NewPaletteForm extends Component {
             distance={20}
           />
         </main>
+        
+        <ExportDialog
+          open={exportDialogOpen}
+          onClose={this.closeExportDialog}
+          palette={tempPalette}
+          paletteElement={this.paletteRef.current}
+        />
       </div>
     );
   }

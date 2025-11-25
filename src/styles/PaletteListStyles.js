@@ -1,48 +1,292 @@
-export default { 
-    root: {
-    backgroundColor: "#121212",
+const styles = { 
+  "@keyframes gradientShift": {
+    "0%": {
+      transform: "translate(0%, 0%) scale(1)",
+    },
+    "33%": {
+      transform: "translate(30%, -30%) scale(1.1)",
+    },
+    "66%": {
+      transform: "translate(-20%, 20%) scale(0.9)",
+    },
+    "100%": {
+      transform: "translate(0%, 0%) scale(1)",
+    },
+  },
+  "@keyframes float": {
+    "0%, 100%": {
+      transform: "translateY(0px)",
+    },
+    "50%": {
+      transform: "translateY(-20px)",
+    },
+  },
+  "@keyframes fadeInUp": {
+    "0%": {
+      opacity: 0,
+      transform: "translateY(30px)",
+    },
+    "100%": {
+      opacity: 1,
+      transform: "translateY(0)",
+    },
+  },
+  "@keyframes shimmer": {
+    "0%": {
+      backgroundPosition: "-1000px 0",
+    },
+    "100%": {
+      backgroundPosition: "1000px 0",
+    },
+  },
+  root: {
+    backgroundColor: "#0a0a0a",
     minHeight: "100vh",
+    position: "relative",
+    overflow: "hidden",
+    fontFamily: "'Roboto', sans-serif",
+  },
+  animatedBackground: {
+    position: "fixed",
+    top: 0,
+    left: 0,
+    width: "100%",
+    height: "100%",
+    zIndex: 0,
+    overflow: "hidden",
+    background: "linear-gradient(135deg, #0a0a0a 0%, #1a1a2e 50%, #16213e 100%)",
+  },
+  gradientOrb1: {
+    position: "absolute",
+    width: "600px",
+    height: "600px",
+    borderRadius: "50%",
+    background: "radial-gradient(circle, rgba(100, 181, 246, 0.15) 0%, transparent 70%)",
+    top: "-200px",
+    left: "-200px",
+    animation: "$gradientShift 20s ease-in-out infinite",
+    filter: "blur(60px)",
+  },
+  gradientOrb2: {
+    position: "absolute",
+    width: "500px",
+    height: "500px",
+    borderRadius: "50%",
+    background: "radial-gradient(circle, rgba(156, 39, 176, 0.15) 0%, transparent 70%)",
+    bottom: "-150px",
+    right: "-150px",
+    animation: "$gradientShift 25s ease-in-out infinite",
+    animationDelay: "5s",
+    filter: "blur(60px)",
+  },
+  gradientOrb3: {
+    position: "absolute",
+    width: "400px",
+    height: "400px",
+    borderRadius: "50%",
+    background: "radial-gradient(circle, rgba(76, 175, 80, 0.1) 0%, transparent 70%)",
+    top: "50%",
+    left: "50%",
+    transform: "translate(-50%, -50%)",
+    animation: "$gradientShift 30s ease-in-out infinite",
+    animationDelay: "10s",
+    filter: "blur(60px)",
+  },
+  container: {
+    position: "relative",
+    zIndex: 1,
+    width: "90%",
+    maxWidth: "1400px",
+    margin: "0 auto",
+    padding: "2rem 0",
+  },
+  hero: {
+    minHeight: "80vh",
     display: "flex",
     alignItems: "center",
     justifyContent: "center",
-    padding: "2rem 0",
-    fontFamily: "'Roboto', sans-serif",
+    textAlign: "center",
+    padding: "4rem 0",
   },
-  container: {
-    width: "70%",
-    maxWidth: "1200px",
+  heroContent: {
+    animation: "$fadeInUp 1s ease-out",
+  },
+  heroTitle: {
+    fontSize: "4.5rem",
+    fontWeight: "800",
+    color: "#ffffff",
+    marginBottom: "1.5rem",
+    lineHeight: "1.2",
+    letterSpacing: "-0.02em",
+    "& br": {
+      display: "block",
+    },
+    "@media (max-width: 768px)": {
+      fontSize: "3rem",
+    },
+  },
+  gradientText: {
+    background: "linear-gradient(135deg, #667eea 0%, #764ba2 25%, #f093fb 50%, #4facfe 75%, #00f2fe 100%)",
+    backgroundSize: "200% auto",
+    WebkitBackgroundClip: "text",
+    WebkitTextFillColor: "transparent",
+    backgroundClip: "text",
+    animation: "$shimmer 3s linear infinite",
+    display: "inline-block",
+  },
+  heroSubtitle: {
+    fontSize: "1.25rem",
+    color: "#b0b0b0",
+    maxWidth: "700px",
+    margin: "0 auto 3rem",
+    lineHeight: "1.6",
+    "@media (max-width: 768px)": {
+      fontSize: "1rem",
+    },
+  },
+  heroButtons: {
     display: "flex",
-    flexDirection: "column",
-    alignItems: "center",
+    gap: "1.5rem",
+    justifyContent: "center",
+    marginBottom: "5rem",
+    flexWrap: "wrap",
   },
-  nav: {
-      display: "flex",
-    width: "100%",
-    justifyContent: "space-between",
-    alignItems: "center",
+  primaryButton: {
+    background: "linear-gradient(135deg, #667eea 0%, #764ba2 100%)",
     color: "white",
-    paddingBottom: "1.5rem",
-    borderBottom: "1px solid #333",
-    marginBottom: "2rem",
-    },
-  palettes: {
-    boxSizing: "border-box",
-    width: "100%",
-    display: "grid",
-    gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))",
-    gridGap: "1.5rem",
-  },
-  newPaletteButton: {
-    backgroundColor: "#64B5F6", // Blue color matching our theme
-    color: "white",
-    fontWeight: "500",
-    borderRadius: "4px",
-    padding: "0.5rem 1rem",
-    transition: "all 0.3s ease",
+    fontWeight: "600",
+    fontSize: "1.1rem",
+    padding: "1rem 2.5rem",
+    borderRadius: "12px",
+    textTransform: "none",
+    boxShadow: "0 10px 30px rgba(102, 126, 234, 0.3)",
+    transition: "all 0.3s cubic-bezier(0.4, 0, 0.2, 1)",
     "&:hover": {
-      backgroundColor: "#42A5F5", // Slightly darker blue on hover
-      boxShadow: "0 4px 8px rgba(0,0,0,0.2)",
-      transform: "translateY(-2px)",
+      transform: "translateY(-3px)",
+      boxShadow: "0 15px 40px rgba(102, 126, 234, 0.4)",
+      background: "linear-gradient(135deg, #764ba2 0%, #667eea 100%)",
     },
   },
-  };
+  secondaryButton: {
+    color: "#64B5F6",
+    borderColor: "#64B5F6",
+    fontWeight: "600",
+    fontSize: "1.1rem",
+    padding: "1rem 2.5rem",
+    borderRadius: "12px",
+    textTransform: "none",
+    borderWidth: "2px",
+    transition: "all 0.3s cubic-bezier(0.4, 0, 0.2, 1)",
+    "&:hover": {
+      transform: "translateY(-3px)",
+      borderColor: "#42A5F5",
+      backgroundColor: "rgba(100, 181, 246, 0.1)",
+      borderWidth: "2px",
+    },
+  },
+  features: {
+    display: "grid",
+    gridTemplateColumns: "repeat(auto-fit, minmax(250px, 1fr))",
+    gap: "2rem",
+    marginTop: "4rem",
+  },
+  featureCard: {
+    background: "rgba(255, 255, 255, 0.03)",
+    backdropFilter: "blur(10px)",
+    border: "1px solid rgba(255, 255, 255, 0.1)",
+    borderRadius: "16px",
+    padding: "2rem",
+    textAlign: "center",
+    transition: "all 0.4s cubic-bezier(0.4, 0, 0.2, 1)",
+    animation: "$float 6s ease-in-out infinite",
+    "&:nth-child(2)": {
+      animationDelay: "2s",
+    },
+    "&:nth-child(3)": {
+      animationDelay: "4s",
+    },
+    "&:hover": {
+      transform: "translateY(-10px) scale(1.02)",
+      background: "rgba(255, 255, 255, 0.05)",
+      border: "1px solid rgba(100, 181, 246, 0.3)",
+      boxShadow: "0 20px 60px rgba(100, 181, 246, 0.2)",
+    },
+    "& h3": {
+      color: "#ffffff",
+      fontSize: "1.3rem",
+      fontWeight: "600",
+      marginBottom: "0.75rem",
+    },
+    "& p": {
+      color: "#b0b0b0",
+      fontSize: "0.95rem",
+      lineHeight: "1.6",
+    },
+  },
+  featureIcon: {
+    width: "60px",
+    height: "60px",
+    margin: "0 auto 1.5rem",
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
+    borderRadius: "12px",
+    background: "linear-gradient(135deg, rgba(100, 181, 246, 0.2) 0%, rgba(118, 75, 162, 0.2) 100%)",
+    "& svg": {
+      fontSize: "2rem",
+      color: "#64B5F6",
+    },
+  },
+  palettesSection: {
+    padding: "4rem 0",
+    minHeight: "50vh",
+  },
+  sectionTitle: {
+    fontSize: "2.5rem",
+    fontWeight: "700",
+    color: "#ffffff",
+    marginBottom: "3rem",
+    textAlign: "center",
+    position: "relative",
+    "&::after": {
+      content: '""',
+      display: "block",
+      width: "80px",
+      height: "4px",
+      background: "linear-gradient(90deg, #667eea 0%, #764ba2 100%)",
+      margin: "1rem auto 0",
+      borderRadius: "2px",
+    },
+  },
+  palettes: {
+    display: "grid",
+    gridTemplateColumns: "repeat(auto-fill, minmax(300px, 1fr))",
+    gap: "2rem",
+    "@media (max-width: 768px)": {
+      gridTemplateColumns: "1fr",
+    },
+  },
+  paletteWrapper: {
+    animation: "$fadeInUp 0.6s ease-out backwards",
+    transition: "transform 0.3s cubic-bezier(0.4, 0, 0.2, 1)",
+    "&:hover": {
+      transform: "translateY(-8px)",
+    },
+  },
+  dialog: {
+    "& .MuiDialog-paper": {
+      backgroundColor: "#1a1a1a",
+      color: "#e0e0e0",
+      borderRadius: "12px",
+      border: "1px solid rgba(255, 255, 255, 0.1)",
+    },
+    "& .MuiDialogTitle-root": {
+      borderBottom: "1px solid rgba(255, 255, 255, 0.1)",
+    },
+    "& .MuiDialogContentText-root": {
+      color: "#b0b0b0",
+    },
+  },
+};
+
+export default styles;
