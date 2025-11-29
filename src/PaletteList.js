@@ -10,6 +10,9 @@ import DialogTitle from '@material-ui/core/DialogTitle';
 import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
+import PaletteIcon from '@material-ui/icons/Palette';
+import TrendingUpIcon from '@material-ui/icons/TrendingUp';
+import SecurityIcon from '@material-ui/icons/Security';
 
 class PaletteList extends Component {
   constructor(props) {
@@ -47,37 +50,105 @@ class PaletteList extends Component {
     
     return (
       <div className={classes.root}>
-        <div className={classes.container}>
-          <nav className={classes.nav}>
-            <h1>React Color Palettes</h1>
-            <Button 
-              variant="contained" 
-              color="primary" 
-              component={Link} 
-              to="/palette/new"
-              className={classes.newPaletteButton}
-              startIcon={<AddIcon />}
-            >
-              Create Palette
-            </Button>
-          </nav>
+        {/* Animated Background */}
+        <div className={classes.animatedBackground}>
+          <div className={classes.gradientOrb1}></div>
+          <div className={classes.gradientOrb2}></div>
+          <div className={classes.gradientOrb3}></div>
+        </div>
 
-          <div className={classes.palettes}>
-            {palettes.map((palette) => (
-              <MiniPalette 
-                {...palette} 
-                key={palette.id}
-                id={palette.id}
-                handleClick={this.goToPalette}
-                handleDelete={this.openDialog}
-              />
-            ))}
+        <div className={classes.container}>
+          {/* Hero Section */}
+          <div className={classes.hero}>
+            <div className={classes.heroContent}>
+              <h1 className={classes.heroTitle}>
+                <span className={classes.gradientText}>Create</span> Beautiful
+                <br />
+                Color Palettes
+              </h1>
+              <p className={classes.heroSubtitle}>
+                Professional color palette generator with WCAG accessibility checking,
+                multi-format export, and intuitive design tools.
+              </p>
+              <div className={classes.heroButtons}>
+                <Button 
+                  variant="contained" 
+                  component={Link} 
+                  to="/palette/new"
+                  className={classes.primaryButton}
+                  startIcon={<AddIcon />}
+                  size="large"
+                >
+                  Create New Palette
+                </Button>
+                <Button 
+                  variant="outlined" 
+                  className={classes.secondaryButton}
+                  size="large"
+                  onClick={() => {
+                    document.querySelector(`.${classes.palettes}`).scrollIntoView({ 
+                      behavior: 'smooth' 
+                    });
+                  }}
+                >
+                  Explore Palettes
+                </Button>
+              </div>
+
+              {/* Feature Cards */}
+              <div className={classes.features}>
+                <div className={classes.featureCard}>
+                  <div className={classes.featureIcon}>
+                    <PaletteIcon />
+                  </div>
+                  <h3>Intuitive Design</h3>
+                  <p>Drag & drop colors with real-time preview</p>
+                </div>
+                <div className={classes.featureCard}>
+                  <div className={classes.featureIcon}>
+                    <SecurityIcon />
+                  </div>
+                  <h3>WCAG Compliant</h3>
+                  <p>Check accessibility & contrast ratios</p>
+                </div>
+                <div className={classes.featureCard}>
+                  <div className={classes.featureIcon}>
+                    <TrendingUpIcon />
+                  </div>
+                  <h3>Export Anywhere</h3>
+                  <p>CSS, JSON, PNG, and more formats</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* Palettes Section */}
+          <div className={classes.palettesSection}>
+            <h2 className={classes.sectionTitle}>Your Palettes</h2>
+            <div className={classes.palettes}>
+              {palettes.map((palette, index) => (
+                <div 
+                  key={palette.id}
+                  className={classes.paletteWrapper}
+                  style={{ animationDelay: `${index * 0.1}s` }}
+                >
+                  <MiniPalette 
+                    {...palette} 
+                    id={palette.id}
+                    handleClick={this.goToPalette}
+                    handleDelete={this.openDialog}
+                  />
+                </div>
+              ))}
+            </div>
           </div>
         </div>
+
         <Dialog
           open={openDeleteDialog}
           aria-labelledby="delete-dialog-title"
           onClose={this.closeDialog}
+          className={classes.dialog}
         >
           <DialogTitle id="delete-dialog-title">Delete This Palette?</DialogTitle>
           <DialogContent>

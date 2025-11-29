@@ -19,6 +19,9 @@ export default {
       "&:hover button":{
         opacity: 1,
         transform: "scale(1)",
+      },
+      "&:hover $selectButton": {
+        opacity: 1,
       }
     },
     copyText : {
@@ -137,6 +140,18 @@ export default {
       zIndex: "25",
       transition: "all  0.4s ease-in-out",
       transitionDelay: "0.3s ",
-    }
+    },
+    selectButton: {
+      position: "absolute",
+      top: "5px",
+      right: "5px",
+      opacity: 0,
+      transition: "all 0.3s ease",
+      backgroundColor: "rgba(0,0,0,0.3)",
+      "&:hover": {
+        backgroundColor: "rgba(0,0,0,0.5)",
+        transform: "scale(1.1)",
+      },
+    },
   }
   
