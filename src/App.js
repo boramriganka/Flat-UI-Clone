@@ -78,9 +78,9 @@ class App extends Component {
             />
           )}
         />
-        <Route
-          exact
-          path="/"
+        <Route 
+        exact 
+        path="/" 
           render={(routeProps) => (
             <PaletteList 
               palettes={this.state.palettes}
