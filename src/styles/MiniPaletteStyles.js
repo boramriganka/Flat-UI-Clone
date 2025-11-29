@@ -1,63 +1,151 @@
-export default {
+const styles = {
+    "@keyframes shine": {
+        "0%": {
+            transform: "translateX(-100%) translateY(-100%) rotate(30deg)",
+        },
+        "100%": {
+            transform: "translateX(100%) translateY(100%) rotate(30deg)",
+        },
+    },
+    "@keyframes colorPulse": {
+        "0%, 100%": {
+            transform: "scale(1)",
+        },
+        "50%": {
+            transform: "scale(1.05)",
+        },
+    },
     root: {
-        backgroundColor: "#2a2a2a",
-        border: "1px solid #444",
-        borderRadius: "8px",
-        padding: "1rem",
+        background: "rgba(255, 255, 255, 0.03)",
+        backdropFilter: "blur(10px)",
+        border: "1px solid rgba(255, 255, 255, 0.1)",
+        borderRadius: "16px",
+        padding: "1.25rem",
         position: "relative",
         overflow: "hidden",
         cursor: "pointer",
-        transition: "transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out",
+        transition: "all 0.4s cubic-bezier(0.4, 0, 0.2, 1)",
+        "&::before": {
+            content: '""',
+            position: "absolute",
+            top: 0,
+            left: 0,
+            width: "100%",
+            height: "100%",
+            background: "linear-gradient(135deg, rgba(100, 181, 246, 0.1) 0%, rgba(118, 75, 162, 0.1) 100%)",
+            opacity: 0,
+            transition: "opacity 0.4s ease",
+        },
+        "&::after": {
+            content: '""',
+            position: "absolute",
+            top: "-50%",
+            left: "-50%",
+            width: "200%",
+            height: "200%",
+            background: "linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent)",
+            transform: "translateX(-100%) translateY(-100%) rotate(30deg)",
+        },
         "&:hover": {
-            transform: "scale(1.03)",
-            boxShadow: "0px 10px 20px rgba(0, 0, 0, 0.2)",
+            transform: "translateY(-8px) scale(1.02)",
+            boxShadow: "0 20px 60px rgba(100, 181, 246, 0.2), 0 0 0 1px rgba(100, 181, 246, 0.3)",
+            border: "1px solid rgba(100, 181, 246, 0.3)",
+            "&::before": {
+                opacity: 1,
+            },
+            "&::after": {
+                animation: "$shine 1.5s ease-in-out",
+            },
         },
         "&:hover $deleteIcon": {
-            opacity: 1
-        }
+            opacity: 1,
+            transform: "scale(1)",
+        },
+        "&:hover $colors": {
+            transform: "scale(1.02)",
+        },
     },
     colors: {
-        backgroundColor: "#333",
-        height: "150px",
+        backgroundColor: "rgba(0, 0, 0, 0.3)",
+        height: "180px",
         width: "100%",
-        borderRadius: "5px",
+        borderRadius: "12px",
         overflow: "hidden",
         display: "grid",
         gridTemplateColumns: "repeat(5, 1fr)",
         gridTemplateRows: "repeat(4, 1fr)",
+        boxShadow: "inset 0 2px 10px rgba(0, 0, 0, 0.2)",
+        transition: "transform 0.4s cubic-bezier(0.4, 0, 0.2, 1)",
     },
     miniColor: {
         height: "100%",
         width: "100%",
+        transition: "all 0.3s cubic-bezier(0.4, 0, 0.2, 1)",
+        position: "relative",
+        "&::after": {
+            content: '""',
+            position: "absolute",
+            top: 0,
+            left: 0,
+            width: "100%",
+            height: "100%",
+            background: "linear-gradient(135deg, transparent 0%, rgba(255, 255, 255, 0.1) 100%)",
+            opacity: 0,
+            transition: "opacity 0.3s ease",
+        },
+        "&:hover": {
+            transform: "scale(1.1)",
+            zIndex: 10,
+            boxShadow: "0 4px 12px rgba(0, 0, 0, 0.3)",
+            "&::after": {
+                opacity: 1,
+            },
+        },
     },
     title: {
         display: "flex",
         justifyContent: "space-between",
         alignItems: "center",
-        margin: "0.75rem 0 0 0",
-        color: "#e0e0e0",
+        margin: "1rem 0 0 0",
+        color: "#ffffff",
         paddingTop: "0.5rem",
-        fontSize: "1rem",
+        fontSize: "1.1rem",
+        fontWeight: "600",
+        letterSpacing: "0.02em",
+        textShadow: "0 2px 4px rgba(0, 0, 0, 0.3)",
     },
     emoji: {
         marginLeft: "0.5rem",
-        fontSize: "1.3rem",
+        fontSize: "1.5rem",
+        filter: "drop-shadow(0 2px 4px rgba(0, 0, 0, 0.3))",
+        transition: "transform 0.3s cubic-bezier(0.4, 0, 0.2, 1)",
+        display: "inline-block",
+        "$root:hover &": {
+            transform: "scale(1.2) rotate(10deg)",
+        },
     },
     deleteIcon: {
         color: "#ffffff",
-        backgroundColor: "#eb3d30",
-        width: "20px",
-        height: "20px",
+        background: "linear-gradient(135deg, #f44336 0%, #e91e63 100%)",
+        width: "24px",
+        height: "24px",
         position: "absolute",
         right: "0px",
         top: "0px",
-        padding: "5px",
+        padding: "8px",
         zIndex: 10,
         opacity: 0,
-        borderBottomLeftRadius: "5px",
-        transition: "all 0.3s ease-in-out",
+        transform: "scale(0.8)",
+        borderBottomLeftRadius: "12px",
+        borderTopRightRadius: "16px",
+        transition: "all 0.3s cubic-bezier(0.4, 0, 0.2, 1)",
+        boxShadow: "0 4px 12px rgba(244, 67, 54, 0.4)",
         "&:hover": {
-            transform: "scale(1.3)"
-        }
-    }
+            transform: "scale(1.15)",
+            boxShadow: "0 6px 20px rgba(244, 67, 54, 0.6)",
+            background: "linear-gradient(135deg, #e91e63 0%, #f44336 100%)",
+        },
+    },
 };
+
+export default styles;

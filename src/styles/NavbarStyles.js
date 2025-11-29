@@ -64,5 +64,14 @@ export default {
       "& .MuiInput-underline:hover:not(.Mui-disabled):before": {
         borderBottom: "2px solid #64B5F6",
       },
-    }
+    },
+    iconButton: {
+      color: "#f5f5f5",
+      marginLeft: "0.5rem",
+      transition: "all 0.3s ease",
+      "&:hover": {
+        backgroundColor: "rgba(100, 181, 246, 0.1)",
+        color: "#64B5F6",
+      },
+    },
   };
